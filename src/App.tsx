@@ -95,7 +95,7 @@ function App() {
     },
     [VITE_TELEGRAM_BOT_SECRET]
   );
-
+  /*
   useEffect(() => {
     if ((window as any).Telegram) {
       const telegramApp = (window as any).Telegram?.WebApp;
@@ -113,7 +113,7 @@ function App() {
       setTelegramUser(userObject);
       telegramApp.expand();
     }
-  }, []);
+  }, []); */
 
   const handleTelegramResponse = useCallback(
     async (user: TelegramUser) => {
