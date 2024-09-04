@@ -169,9 +169,6 @@ function App() {
 
   return (
     <div>
-      <button onClick={connect}>
-        {connected ? "Connect Wallet" : account}
-      </button>
       <div className="card">
         <h3>Mint a PKP Using a Telegram Account</h3>
         <hr />
