@@ -24,7 +24,6 @@ function App() {
     VITE_TELEGRAM_BOT_SECRET,
   } = import.meta.env as unknown as EnvVariables;
 
-  const { sdk, account, connected, provider, /*connecting, chainId, balance*/ } = useSDK();
   const [telegramUser, setTelegramUser] = useState<TelegramUser | null>(null);
   const [mintedPkp, setMintedPkp] = useState<MintedPkp | null>(null);
   const [pkpSessionSigs, setPkpSessionSigs] = useState<PkpSessionSigs | null>(
@@ -37,16 +36,6 @@ function App() {
       console.log("Current telegramUser state:", telegramUser);
     }
   }, [telegramUser]);
-
-  const connect = async () => {
-    try {
-      console.log("trying to connect")
-      console.log("sdk", sdk)
-      await sdk?.connect();
-    } catch (err) {
-      console.warn(`failed to connect..`, err);
-    }
-  };
 
   // Validating the Telegram user data, go here to learn more:
   // https://core.telegram.org/widgets/login#checking-authorization
@@ -95,6 +84,7 @@ function App() {
     },
     [VITE_TELEGRAM_BOT_SECRET]
   );
+
   /*
   useEffect(() => {
     if ((window as any).Telegram) {
@@ -113,7 +103,7 @@ function App() {
       setTelegramUser(userObject);
       telegramApp.expand();
     }
-  }, []); */
+  }, []);*/
 
   const handleTelegramResponse = useCallback(
     async (user: TelegramUser) => {
