@@ -96,32 +96,16 @@ function App() {
     [VITE_TELEGRAM_BOT_SECRET]
   );
 
-  /*
-
-  useEffect(() => {
-    if ((window as any).Telegram) {
-      const telegramApp = (window as any).Telegram?.WebApp;
-      const telegramAppData = telegramApp.initDataUnsafe;
-      const userObject = {
-        "id": Number(telegramAppData.user.id),
-        "first_name": telegramAppData.user.first_name,
-        "username": telegramAppData.user.username,
-        "auth_date": Number(telegramAppData.auth_date),
-        "hash": telegramAppData.hash
-      }
-      console.log("user object: ", userObject);
-      setTelegramUser(userObject); // temp fix until we fix the provider
-      telegramApp.expand();
-    }
-  }, []);*/
-  
   const handleTelegramResponse = useCallback(
     async (user: TelegramUser) => {
       console.log("Telegram auth response received:", user);
       if (user && typeof user === "object") {
-        setTelegramUser(user);
+        // Process the user data from Telegram login
+        const processedUser: TelegramUser = { ...user };
 
-        const { isValid, isRecent } = await verifyTelegramUser(user);
+        setTelegramUser(processedUser);
+
+        const { isValid, isRecent } = await verifyTelegramUser(processedUser);
         if (!isValid || !isRecent) {
           setValidationError(
             !isValid
@@ -130,6 +114,11 @@ function App() {
           );
         } else {
           setValidationError(null);
+        }
+
+        // Expand the Telegram WebApp if available
+        if ((window as any).Telegram?.WebApp) {
+          (window as any).Telegram.WebApp.expand();
         }
       } else {
         console.error("Invalid user data received:", user);
