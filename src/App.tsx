@@ -100,21 +100,18 @@ function App() {
     if ((window as any).Telegram) {
       const telegramApp = (window as any).Telegram?.WebApp;
       const telegramAppData = telegramApp.initDataUnsafe;
-      console.log("telegramAppData: ", telegramAppData)
-      const userObject : TelegramUser = {
+      const userObject = {
         "id": Number(telegramAppData.user.id),
         "first_name": telegramAppData.user.first_name,
-        "last_name": "",
         "username": telegramAppData.user.username,
         "auth_date": Number(telegramAppData.auth_date),
         "hash": telegramAppData.hash
       }
       console.log("user object: ", userObject);
-      setTelegramUser(userObject);
+      setTelegramUser(userObject); // temp fix until we fix the provider
       telegramApp.expand();
     }
   }, []);
-
   const handleTelegramResponse = useCallback(
     async (user: TelegramUser) => {
       console.log("Telegram auth response received:", user);
